@@ -10,7 +10,14 @@ static const int led_pin = 2; // GPIO pin for the LED
 static const int change_pin = 0; // GPIO pin for the button
 
 static QueueHandle_t blinkQueue = NULL;
-
+/*
+IRAM_ATTR - signal the compiler to 
+place the function in the internal RAM 
+of the microcontroller, which allows for faster execution 
+and is essential for interrupt service routines (ISRs) 
+to ensure they run efficiently without being affected by 
+external factors like flash memory access times.
+*/
 void IRAM_ATTR handleButtonPress() {
     static unsigned long last_interrupt_time = 0;
     unsigned long interrupt_time = millis();
