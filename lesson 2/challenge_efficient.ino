@@ -10,6 +10,7 @@ static const int led_pin = 2; // GPIO pin for the LED
 static const int change_pin = 0; // GPIO pin for the button
 
 static QueueHandle_t blinkQueue = NULL;
+
 /*
 IRAM_ATTR - signal the compiler to 
 place the function in the internal RAM 
@@ -18,6 +19,7 @@ and is essential for interrupt service routines (ISRs)
 to ensure they run efficiently without being affected by 
 external factors like flash memory access times.
 */
+
 void IRAM_ATTR handleButtonPress() {
     static unsigned long last_interrupt_time = 0;
     unsigned long interrupt_time = millis();
@@ -35,7 +37,7 @@ void IRAM_ATTR handleButtonPress() {
         last_interrupt_time = interrupt_time;
     }
 }
-//Task: print msg length to serial terminal (lower priority)
+
 void ledTask(void *paramater) {
   int currentDelay = 1000; // Start with slow blinking
   int newDelay;
@@ -67,7 +69,7 @@ void setup() {
         app_cpu         // Core where the task should run.
     );
     
-    vTaskDelete(NULL);
+    vTaskDelete(NULL); // Delete the loop task to free up resources.
 };
 
 void loop() {
